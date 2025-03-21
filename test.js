@@ -1,6 +1,17 @@
+function isMobile() {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
 async function connectRonin() {
+    if (isMobile()) {
+        // Handle mobile-specific wallet connection
+        connectRoninMobile();
+        return;
+    }
+
+    // Handle desktop (extension-based) wallet connection
     if (!window.ronin || !window.ronin.provider) {
-        alert("Please install Ronin Wallet!");
+        alert("Please install Ronin Wallet extension on your browser!");
         return;
     }
     
@@ -27,6 +38,14 @@ async function connectRonin() {
     }
 }
 
+function connectRoninMobile() {
+    const redirectUrl = window.location.origin + "/game_play.html"; // Your app's callback URL
+    const roninDeepLink = `ronin://connect?redirect=${encodeURIComponent(redirectUrl)}`;
+
+    // Redirect the user to the Ronin Wallet app
+    window.location.href = roninDeepLink;
+}
+
 async function signMessage(account, provider) {
     const message = `Sign to verify your identity. Timestamp: ${Date.now()}`;
     
@@ -41,5 +60,19 @@ async function signMessage(account, provider) {
     }
 }
 
-document.getElementById("connectBtn").addEventListener("click", connectRonin);
+function getWalletAddressFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("wallet");
+}
 
+// Retrieve wallet address on page load
+window.addEventListener("load", () => {
+    const walletAddress = getWalletAddressFromUrl();
+    if (walletAddress) {
+        localStorage.setItem("roninWalletConnected", "true");
+        localStorage.setItem("roninWalletAddress", walletAddress);
+        document.getElementById("walletAddress").textContent = "Wallet: " + walletAddress;
+    }
+});
+
+document.getElementById("connectBtn").addEventListener("click", connectRonin);
