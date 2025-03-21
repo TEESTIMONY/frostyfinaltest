@@ -14,9 +14,22 @@
 <body>
     <div class="container">
         
-        <a href="game_play.html"><button class="join-btn">Play Game</button></a>
+        <a href="#"><button class="join-btn" id ="playGameButton">Play Game</button></a>
         <a href="leaderboard.html"><button class="join-btn">Leaderboard</button></a>
     </div>
+
+    <script>
+        document.getElementById("playGameButton").addEventListener("click", () => {
+            const isWalletConnected = localStorage.getItem("roninWalletConnected");
+
+            if (isWalletConnected === "true") {
+                window.location.href = "/game_play.html"; // Go directly to the game if connected
+            } else {
+                window.location.href = "/test.html"; // Redirect to wallet connection page
+            }
+        });
+
+    </script>
     
 </body>
 </html>

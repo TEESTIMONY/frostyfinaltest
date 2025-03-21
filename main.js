@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.getElementById("startButton");
+const leaderBoard = document.getElementById("leaderBoard");
+const home = document.getElementById("home");
+const btns = document.getElementById("btns");
 
 // Load images
 const playerImg = new Image();
@@ -33,6 +36,21 @@ let score = 0;
 let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
 let scoreInterval;
 
+
+// Check if username exists in localStorage
+window.addEventListener("load", () => {
+    const username = localStorage.getItem("playerUsername");
+
+    if (!username) {
+        // Redirect to test.html if username is not found
+        alert("No username found. Redirecting to username setup page.");
+        window.location.href = "test.html";
+    } else {
+        // Show a welcome message if the username exists
+        alert(`Welcome back, ${username}!`);
+        // Proceed to initialize the gameplay logic here
+    }
+});
 
 const BACKEND_URL = "https://my-backend-red.vercel.app/api/score";
 
@@ -131,13 +149,11 @@ function gameOver() {
     powerUps = [];
     particles = [];
 
-    let playerName = localStorage.getItem("roninWalletAddress"); 
+    let playerName = localStorage.getItem("playerUsername"); 
 
     if (playerName) {
-        playerName = playerName.slice(0, 5); // Use only the first 5 characters
-    } else {
-        playerName = "Guest"; // Default name if no wallet is connected
-    }
+        playerName = playerName; // Use only the first 5 characters
+    } 
 
     fetch(BACKEND_URL, {
         method: "POST",
@@ -168,6 +184,10 @@ function gameOver() {
     ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 40);
 
     startButton.style.display = "block";
+    leaderBoard.style.display = "block";
+    home.style.display = "block";
+    btns.style.display="block"
+
 }
 
 // Main game loop
@@ -305,6 +325,9 @@ startButton.addEventListener("click", () => {
         gameStarted = true;
         score = 0;
         startButton.style.display = "none";
+        leaderBoard.style.display = "none";
+        home.style.display = "none";
+        btns.style.display="none"
 
         // Reset player properties
         player.x = canvas.width / 2 - player.width / 2;

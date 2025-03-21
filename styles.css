@@ -61,7 +61,7 @@ canvas {
     -webkit-touch-callout: none; /* Prevents long-press menu on iOS */
 }
 
-.buttons{
+#btns{
     display: block;
     width: 400px;
 
@@ -98,7 +98,43 @@ canvas {
     border-radius: 10px;
 }
 
+#leaderBoard{
+    padding: 12px 18px;
+    font-size: 18px;
+    font-family: 'Rubik Glitch', sans-serif;
+    color: white;
+    background-color: red;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 80%;
+    max-width: 200px;
+    text-align: center;
+    border-radius: 10px;
+}
+#home{
+    padding: 12px 18px;
+    font-size: 18px;
+    font-family: 'Rubik Glitch', sans-serif;
+    color: white;
+    background-color: red;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 80%;
+    max-width: 200px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
 #startButton:hover {
+    background-color: darkred;
+}
+#leaderBoard:hover {
+    background-color: darkred;
+}
+#home:hover {
     background-color: darkred;
 }
 

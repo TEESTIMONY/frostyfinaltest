@@ -4,60 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ronin Wallet Login</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #1a202c;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            padding: 20px;
-            background-color: #2d3748;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4299e1;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #3182ce;
-        }
-        input {
-            padding: 5px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="test.css">
+
 </head>
 <body>
-    <div class="container">
-        <h1>Login with Ronin Wallet</h1>
-        <button id="connectBtn">Connect Wallet</button>
-        <p id="walletName"></p>
-        <p id="walletAddress"></p>
-        
-        <div id="usernameContainer" class="hidden">
-            <label for="username">Enter your username:</label>
-            <input type="text" id="username" placeholder="Your username">
-            <button id="saveUsername">Save</button>
-            <p id="savedUsername"></p>
-        </div>
-    </div>
+    <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Player Username</title>
+        </head>
+        <body>
+            <div class="content">
+                <label for="usernameInput">Add your Frosty username:</label>
+                <input type="text" id="usernameInput" placeholder="Enter username">
+                <div id="displayUsername"></div>
+
+                <button id="saveUsernameBtn">Save Username</button>
+            </div>
+        </body>
+        </html>
+
     
     <script src="test.js">
 

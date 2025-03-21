@@ -41,11 +41,12 @@
                 const response = await fetch("https://my-backend-red.vercel.app/api/leaderboard");
                 const data = await response.json();
 
+                // Update the leaderboard UI
                 const leaderboardList = document.getElementById("leaderboard-list");
                 leaderboardList.innerHTML = ""; // Clear previous content
 
                 data.forEach((entry, index) => {
-                    const rank = index + 1; // Rank is just the index +1
+                    const rank = index + 1; // Rank is the index + 1
                     const listItem = document.createElement("li");
                     listItem.innerHTML = `
                         <span class="rank">${rank}</span> 
@@ -55,14 +56,40 @@
                     leaderboardList.appendChild(listItem);
                 });
 
-                // Update user position (assuming the first entry is the user)
-                document.getElementById("user-score").textContent = data[0]?.score || "0";
-                document.getElementById("user-rank").textContent = data[0] ? (data.indexOf(data[0]) + 1) : "N/A";
+                // Get the username from localStorage
+                const username = localStorage.getItem("playerUsername");
+
+                if (username) {
+                    // Find the user's data based on the username
+                    const userData = data.find(entry => entry.player === username);
+
+                    if (userData) {
+                        // Update the user's score and rank
+                        document.getElementById("user-score").textContent = userData.score || "0";
+                        document.getElementById("user-rank").textContent = data.indexOf(userData) + 1;
+                    } else {
+                        // If the user's data is not found
+                        document.getElementById("user-score").textContent = "0";
+                        document.getElementById("user-rank").textContent = "N/A";
+                    }
+                } else {
+                    // If no username is found in localStorage
+                    alert("No username found. Please save your username first.");
+                    document.getElementById("user-score").textContent = "0";
+                    document.getElementById("user-rank").textContent = "N/A";
+                }
+
+                // Update the total number of players
                 document.getElementById("total-players").textContent = data.length;
             } catch (error) {
                 console.error("Error fetching leaderboard:", error);
+                alert("Failed to fetch leaderboard data. Please try again later.");
             }
         }
+
+        // Call the function on page load
+        // window.addEventListener("load", fetchLeaderboard);
+
 
         fetchLeaderboard();
     </script>
