@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frosty game play</title>
+    <link rel="stylesheet" href="choose_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Joti+One&family=Knewave&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Joti+One&family=Knewave&family=Rubik+Glitch&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="container">
+        
+        <a href="#"><button class="join-btn" id ="playGameButton">Play Game</button></a>
+        <a href="leaderboard.html"><button class="join-btn">Leaderboard</button></a>
+    </div>
+
+    <script>
+        document.getElementById("playGameButton").addEventListener("click", () => {
+            const isWalletConnected = localStorage.getItem("roninWalletConnected");
+
+            if (isWalletConnected === "true") {
+                window.location.href = "/game_play.html"; // Go directly to the game if connected
+            } else {
+                window.location.href = "/test.html"; // Redirect to wallet connection page
+            }
+        });
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #0D2240;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+}
+
+.leaderboard {
+    max-width: 400px;
+    margin: auto;
+    background: #17375E;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 90vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+
+
+.user-score p{
+    margin-top: 0;
+    font-size: 12px;
+    max-width: 100px;
+}
+
+.user-score h2{
+    margin-bottom: 0;
+    font-size: 25px;
+
+}
+
+.user-info img {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.players-count {
+    text-align: left;
+
+}
+
+.players-count h2{
+    margin-bottom: 0;
+    font-size: 25px;
+}
+
+
+.players-count p{
+    margin-top: 0;
+    font-size: 12px;
+    max-width: 100px;
+}
+.board {
+    margin-top: 10px;
+    background: #1E3A66;
+    border-radius: 8px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.leaderboard-title {
+    font-size: 14px;
+    background: #24476D;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+}
+
+.scrollable-list {
+    max-height: 600px; /* Scrollable area */
+    overflow-y: auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #24476D;
+}
+
+.rank {
+    color: #B0BEC5;
+    padding-right: 18px;
+}
+
+.name {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.score {
+    font-weight: bold;
+}
+
+/* Scrollbar styling */
+.scrollable-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background: #24476D;
+    border-radius: 5px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background: #1E3A66;
+}
+
+
+
+@media (max-width: 440px) {
+    .scrollable-list {
+        max-height: 580px;
+    }
+}
+
+@media (max-width: 400px) {
+    .scrollable-list {
+        max-height: 550px;
+    }
+}
+
+
+@media (max-width: 380px) {
+    .scrollable-list {
+        max-height: 350px;
+    }
+}
+
+@media (max-height: 750px) {
+    .scrollable-list {
+        max-height: 420px;
+    }
+}
+
+
+@media (max-height: 700px) {
+    .scrollable-list {
+        max-height: 360px;
+    }
+}
+
+
+
