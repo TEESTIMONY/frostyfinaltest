@@ -3,47 +3,60 @@ function isMobile() {
 }
 
 async function connectRonin() {
-    if (isMobile()) {
-        // Handle mobile-specific wallet connection
-        connectRoninMobile();
-        return;
-    }
+    // Check if Ronin Wallet extension is available (desktop)
+    if (window.ronin && window.ronin.provider) {
+        alert("This is a browser.");
 
-    // Handle desktop (extension-based) wallet connection
-    if (!window.ronin || !window.ronin.provider) {
-        alert("Please install Ronin Wallet extension on your browser!");
-        return;
-    }
-    
-    try {
-        const provider = window.ronin.provider;
-        const accounts = await provider.request({ method: "eth_requestAccounts" });
-        const walletName = "Ronin Wallet"; // Since we detected Ronin provider
-        
-        document.getElementById("walletName").textContent = "Wallet Name: " + walletName;
-        document.getElementById("walletAddress").textContent = "Wallet: " + accounts[0];
-        document.getElementById("usernameContainer").classList.remove("hidden"); // Show username input
-        signMessage(accounts[0], provider);
+        try {
+            const provider = window.ronin.provider;
 
-        if (accounts.length > 0) {
-            // Store connection status and wallet address in localStorage
-            localStorage.setItem("roninWalletConnected", "true");
-            localStorage.setItem("roninWalletAddress", accounts[0]);
+            // Request wallet connection (desktop)
+            const accounts = await provider.request({ method: "eth_requestAccounts" });
 
-            // Redirect to game.html after storing wallet info
-            window.location.href = "/game_play.html";
+            if (accounts.length > 0) {
+                const walletAddress = accounts[0];
+                const walletName = "Ronin Wallet (Extension)";
+
+                // Display wallet info
+                document.getElementById("walletName").textContent = "Wallet Name: " + walletName;
+                document.getElementById("walletAddress").textContent = "Wallet Address: " + walletAddress;
+
+                // Store wallet info in localStorage
+                localStorage.setItem("roninWalletConnected", "true");
+                localStorage.setItem("roninWalletAddress", walletAddress);
+
+                // Optionally, verify the wallet by signing a message
+                await signMessage(walletAddress, provider);
+
+                // Redirect to game page after connecting
+                window.location.href = "/game_play.html";
+            }
+        } catch (error) {
+            console.error("Desktop connection failed:", error);
+            alert("Failed to connect to Ronin Wallet. Please try again.");
         }
-    } catch (error) {
-        console.error("Connection failed:", error);
+    } else {
+        alert("This is a phone.");
+        // If extension is not available (mobile browser), redirect to Ronin Wallet app
+        connectRoninMobile();
     }
 }
 
 function connectRoninMobile() {
     const redirectUrl = window.location.origin + "/game_play.html"; // Your app's callback URL
     const roninDeepLink = `ronin://connect?redirect=${encodeURIComponent(redirectUrl)}`;
+    const appStoreUrl = "https://wallet.roninchain.com/"; // Update with the official Ronin Wallet app link
 
-    // Redirect the user to the Ronin Wallet app
+    // Attempt to open the Ronin Wallet app
     window.location.href = roninDeepLink;
+
+    // Provide a fallback to the app store if the app is not installed
+    setTimeout(() => {
+        if (!document.hidden) { // If the user hasn't left the page
+            alert("It seems you don't have the Ronin Wallet app installed. Redirecting to the app store...");
+            window.location.href = appStoreUrl;
+        }
+    }, 2000); // Adjust timeout as needed
 }
 
 async function signMessage(account, provider) {
